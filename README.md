@@ -20,3 +20,12 @@ Critique is invited, never presumed. Credit belongs to the writer. Boundaries ma
 The server is planned as an 18+ space for writers at every stage, from first draft to publication. You do not need a particular credential, aesthetic, or amount of confidence to belong here. You need curiosity, respect for other writers, and a willingness to take the work seriously.
 
 Read the [Server Governance & Constitution](SERVER%20GOVERNANCE%20%26%20CONSTITUTION.md) for the full proposed framework.
+
+## Further Information
+
+- [Intoduction Governance Letter](goverance-letter.md)
+- [Community Standards](community-standards.md)
+- [Member Guide](member-guide.md)
+- [Proposed Alternate Names](proposed-names.md)
+
+
