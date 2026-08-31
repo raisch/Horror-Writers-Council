@@ -27,5 +27,4 @@ Read the [Server Governance & Constitution](SERVER%20GOVERNANCE%20%26%20CONSTITU
 - [Community Standards](community-standards.md)
 - [Member Guide](member-guide.md)
 - [Proposed Alternate Names](proposed-names.md)
-
-
+- [Proposed Channel List](proposed-channels.md)
