@@ -15,7 +15,7 @@ We are building a place for the full range of the genre: folk horror, gothic, we
 
 The server is designed as a shared institution, not a personality-driven chat room. Members elect a Council of Elders to steward rules, moderation, events, and major community decisions. The Founder serves as Archivist: technical custodian, not ruler.
 
-Critique is invited, never presumed. Credit belongs to the writer. Boundaries matter. Harassment, plagiarism, retaliation, and bad-faith disruption do not.
+Critique is invited, never presumed. Credit belongs to the writer. Boundaries matter. Generative AI is not permitted in creative work shared through the server or in the server's critique process. Harassment, plagiarism, retaliation, and bad-faith disruption do not.
 
 The server is planned as an 18+ space for writers at every stage, from first draft to publication. You do not need a particular credential, aesthetic, or amount of confidence to belong here. You need curiosity, respect for other writers, and a willingness to take the work seriously.
 

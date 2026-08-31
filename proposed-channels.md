@@ -26,10 +26,10 @@ Everyday conversation for members in good standing.
 
 ## The Workroom
 
-Craft conversation and clearly scoped, opt-in creative exchange.
+Human-only craft conversation and clearly scoped, opt-in creative exchange. Generative-AI use is prohibited for creative work shared or discussed in these channels.
 
 - `#craft-after-dark` - Technique, structure, voice, pacing, and genre craft discussion.
-- `#brainstorming-seance` - Premise, plot, character, and worldbuilding help.
+- `#brainstorming-seance` - Human-to-human premise, plot, character, and worldbuilding help.
 - `#first-sightings` - Voluntary excerpts and early-draft sharing; no critique unless the author asks for it.
 - `#critique-requests` - Requests for feedback with required scope, content warnings, and feedback boundaries.
 - `#critique-exchange` - Workshop discussion for accepted submissions; access and posting rules set per workshop cycle.

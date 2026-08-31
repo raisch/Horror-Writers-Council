@@ -24,6 +24,8 @@ The server is not governed by the personal preference of its technical owner. It
 - **Founding voter:** A member in good standing when the founding ratification ballot opens. The 30-day membership requirement does not apply to that one ballot.
 - **Moderator:** A member appointed by the Council to apply Community Standards and protect the server in day-to-day operations.
 - **Emergency action:** A temporary action needed to stop an active raid, account compromise, credible safety threat, or major technical failure.
+- **Creative work:** Prose, poetry, scripts, criticism, reviews, visual or audio work, and creative promotional material shared, submitted, critiqued, performed, promoted, or otherwise represented through the server.
+- **Generative AI:** A system that generates or materially transforms expressive text, images, audio, or other creative content in response to a prompt or other input. It does not include non-generative spelling, grammar, formatting, speech-to-text, or text-to-speech tools that do not generate or substantially rewrite expressive content.
 - **Constitutional amendment:** A change to this document. All other approved policies are ordinary server rules.
 
 ### Section 2. Member Rights
@@ -206,7 +208,7 @@ The server is for adults aged 18 or older. Members must not post sexual or other
 
 ### Section 4. Authorship and AI-assisted work
 
-Members must not present another person's work as their own. Any use of generative AI in a submission, critique request, or collaborative activity is prohibited.
+Members must not present another person's work as their own. Generative AI may not be used to create, develop, revise, transform, or provide critique of a creative work shared, submitted, critiqued, performed, promoted, or otherwise represented through the server. This includes generated prose, imagery, audio, plot or character development, substantive revision, and AI-generated feedback. Non-generative accessibility and basic proofreading tools defined in Article I are permitted.
 
 ### Section 5. Workshop confidentiality and creative rights
 

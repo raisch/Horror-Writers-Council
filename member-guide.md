@@ -16,9 +16,9 @@ The server is not a venue for harassment, bigotry, doxxing, scams, plagiarism, s
 
 Every member has the right to safety, clear rules, a private route to report misconduct, notice and an opportunity to respond to ordinary moderation, and an appeal of material moderation decisions. Eligible members may vote and run for Council.
 
-Creative work remains with its creator. Sharing a draft gives other members permission to read and discuss it in the stated activity, not to repost it, distribute it, adapt it, publish it, or use it outside the server. Do not use another member's draft, critique, or workshop discussion to train or improve an AI system without express permission from everyone whose rights are affected.
+Creative work remains with its creator. Sharing a draft gives other members permission to read and discuss it in the stated activity, not to repost it, distribute it, adapt it, publish it, or use it outside the server. Do not use generative AI to create, develop, revise, transform, or critique creative work shared or represented through the server. Do not put another member's draft, critique, workshop discussion, or private communication into an AI system.
 
-Critique is opt-in. Keep it directed at the work, follow the writer's stated boundaries, and give it in good faith. Use content warnings and the appropriate channels for disturbing material.
+Critique is opt-in and human-to-human. Keep it directed at the work, follow the writer's stated boundaries, and give it in good faith. Non-generative accessibility and basic proofreading tools remain permitted when they do not generate or substantially rewrite expressive content. Use content warnings and the appropriate channels for disturbing material.
 
 ## How the Server Is Governed
 

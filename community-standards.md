@@ -36,19 +36,19 @@ Real-world graphic imagery, targeted bigotry, sexual violence presented for shoc
 
 ## Use of Generative AI
 
-All use of generative AI on stories is strictly prohibited. This includes using LLMs to generate any part of your story, revise any part of your story, or provide a critique of your story. Simple spell check programs such as those found in MS Word or Google docs are allowed. Additionally, feeding another writer’s story into an LLM to generate a critique or feedback is strictly prohibited. 
+Generative AI may not be used to create, develop, revise, transform, or provide critique of any creative work shared, submitted, critiqued, performed, promoted, or otherwise represented through the server. This includes generated prose, imagery, audio, plot or character development, substantive revision, and AI-generated feedback. Non-generative spelling, grammar, formatting, speech-to-text, and text-to-speech tools are permitted only when they do not generate or substantially rewrite expressive content.
 
-Any use of generative AI as described above can result in a permanent ban from the server. 
+Do not feed another writer's work, critique, workshop discussion, private message, or other server material into an AI system. This is prohibited even when the stated purpose is feedback, summarization, research, or evaluation.
 
-If you suspect AI use, inform a moderator via private DM or submit a ticket to the Council of Elders. 
+Violations may result in proportionate moderation action, including a permanent ban in serious or repeated cases. If you suspect a violation, inform a Moderator through private direct message or submit a ticket to the Council of Elders.
 
-Public accusations *are not* allowed in the server and will be considered equally egregious.
+Public accusations are not allowed. Reports must be handled through the private process in accordance with the Constitution's investigation, confidentiality, and appeal rules.
 
 ## Workshops, Critique, and Creative Rights
 
 Share only work you have the right to share. A writer keeps ownership of their draft, research, and critique exchange. Material shared for a workshop may be read and discussed for that workshop; it may not be copied, reposted, distributed, published, adapted, submitted elsewhere, or used outside the server without express permission from the rights holder.
 
-Do not use another member's draft, critique, or workshop discussion to train, evaluate, or improve an AI system without express permission from every affected rights holder. Since any violation of this can directly affect a writer's ability to make a living, these will be taken **VERY** seriously by the Council and can result in a permanent ban from the server.
+Do not use another member's draft, critique, or workshop discussion to train, evaluate, or improve an AI system without express permission from every affected rights holder. Such a violation may directly affect a writer's ability to make a living and can result in a permanent ban.
 
 Critique should be specific, useful, and directed toward the work. The writer may set the scope of feedback, decline critique, or withdraw their work. Disagreement about a critique does not authorize personal attacks.
 
