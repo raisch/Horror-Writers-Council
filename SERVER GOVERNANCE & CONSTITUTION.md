@@ -206,7 +206,7 @@ The server is for adults aged 18 or older. Members must not post sexual or other
 
 ### Section 4. Authorship and AI-assisted work
 
-Members must not present another person's work as their own. Any use of generative AI in a submission, critique request, or collaborative activity must follow the disclosure rules for that channel. The Council may create AI-free channels, events, or workshop tracks and must label them clearly.
+Members must not present another person's work as their own. Any use of generative AI in a submission, critique request, or collaborative activity is prohibited.
 
 ### Section 5. Workshop confidentiality and creative rights
 

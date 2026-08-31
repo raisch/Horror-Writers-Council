@@ -34,11 +34,21 @@ When sharing material that may affect readers, use the content-warning format re
 
 Real-world graphic imagery, targeted bigotry, sexual violence presented for shock, and content that creates a credible risk to members may be restricted or removed. No member is entitled to post any material in every space, or to demand that another member engage with it.
 
+## Use of Generative AI
+
+All use of generative AI on stories is strictly prohibited. This includes using LLMs to generate any part of your story, revise any part of your story, or provide a critique of your story. Simple spell check programs such as those found in MS Word or Google docs are allowed. Additionally, feeding another writer’s story into an LLM to generate a critique or feedback is strictly prohibited. 
+
+Any use of generative AI as described above can result in a permanent ban from the server. 
+
+If you suspect AI use, inform a moderator via private DM or submit a ticket to the Council of Elders. 
+
+Public accusations *are not* allowed in the server and will be considered equally egregious.
+
 ## Workshops, Critique, and Creative Rights
 
 Share only work you have the right to share. A writer keeps ownership of their draft, research, and critique exchange. Material shared for a workshop may be read and discussed for that workshop; it may not be copied, reposted, distributed, published, adapted, submitted elsewhere, or used outside the server without express permission from the rights holder.
 
-Do not use another member's draft, critique, or workshop discussion to train, evaluate, or improve an AI system without express permission from every affected rights holder. Follow any channel rules about disclosure of generative-AI use, including AI-free workshop or event rules.
+Do not use another member's draft, critique, or workshop discussion to train, evaluate, or improve an AI system without express permission from every affected rights holder. Since any violation of this can directly affect a writer's ability to make a living, these will be taken **VERY** seriously by the Council and can result in a permanent ban from the server.
 
 Critique should be specific, useful, and directed toward the work. The writer may set the scope of feedback, decline critique, or withdraw their work. Disagreement about a critique does not authorize personal attacks.
 

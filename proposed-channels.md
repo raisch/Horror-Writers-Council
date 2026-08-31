@@ -1,6 +1,6 @@
 # Proposed Channel List
 
-This structure keeps essential rules, reporting, governance, workshops, and commercial activity distinct. Channel descriptions, permissions, posting limits, content-warning conventions, and AI-use rules should be adopted as ordinary rules after member comment.
+This structure keeps essential rules, reporting, governance, workshops, and commercial activity distinct. Channel descriptions, permissions, posting limits, and content-warning conventions should be adopted as ordinary rules after member comment.
 
 ## The Threshold
 
@@ -29,7 +29,6 @@ Everyday conversation for members in good standing.
 Craft conversation and clearly scoped, opt-in creative exchange.
 
 - `#craft-after-dark` - Technique, structure, voice, pacing, and genre craft discussion.
-- `#the-prompt-crypt` - Writing prompts and prompt responses.
 - `#brainstorming-seance` - Premise, plot, character, and worldbuilding help.
 - `#first-sightings` - Voluntary excerpts and early-draft sharing; no critique unless the author asks for it.
 - `#critique-requests` - Requests for feedback with required scope, content warnings, and feedback boundaries.
