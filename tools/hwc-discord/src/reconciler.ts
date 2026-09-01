@@ -29,6 +29,14 @@ function mappedOrNamed<T extends { discordId: string; name: string }>(items: T[]
     return items.find((item) => item.discordId === mapping.resources[key]) ?? items.find((item) => item.name === name);
 }
 
+function isDiscordBootstrapCategory(name: string): boolean {
+    return name === "Text Channels" || name === "Voice Channels";
+}
+
+function isDiscordBootstrapChannel(name: string, categoryName: string): boolean {
+    return name.toLowerCase() === "general" && isDiscordBootstrapCategory(categoryName);
+}
+
 export function createChangePlan(desired: DesiredState, actual: ActualState, mapping: StateMapping): ChangePlan {
     const changes: Change[] = [];
     const unmanaged: string[] = [];
@@ -59,7 +67,7 @@ export function createChangePlan(desired: DesiredState, actual: ActualState, map
         else if (existing.position !== roleCount - 1 - role.position) changes.push(change("MoveRole", `roles.${role.key}`, "SENSITIVE", ["CreateRole"], existing.position, roleCount - 1 - role.position));
     }
     for (const role of actual.roles) {
-        if (role.name !== "@everyone" && !desiredRoleNames.has(role.name)) unmanaged.push(`role: ${role.name}`);
+        if (role.name !== "@everyone" && !role.managed && !desiredRoleNames.has(role.name)) unmanaged.push(`role: ${role.name}`);
     }
     const managedCategories = actual.categories
         .filter((category) => desiredCategoryNames.has(category.name))
@@ -69,12 +77,19 @@ export function createChangePlan(desired: DesiredState, actual: ActualState, map
         if (!existing) changes.push(change("CreateCategory", `categories.${category.key}`, "SAFE", [], undefined, category));
         else if (managedCategories.findIndex((item) => item.discordId === existing.discordId) !== category.position) changes.push(change("MoveChannel", `categories.${category.key}`, "SENSITIVE", ["CreateCategory"], existing.position, category.position));
     }
-    for (const category of actual.categories) if (!desiredCategoryNames.has(category.name)) unmanaged.push(`category: ${category.name}`);
+    for (const category of actual.categories) {
+        if (!desiredCategoryNames.has(category.name) && !isDiscordBootstrapCategory(category.name)) {
+            unmanaged.push(`category: ${category.name}`);
+        }
+    }
 
     for (const channel of desired.channels) planChannel(desired, actual, mapping, channel, changes);
     for (const channel of actual.channels) {
         const category = actual.categories.find((item) => item.discordId === channel.categoryDiscordId)?.name ?? "";
-        if (!desiredChannels.has(`${desired.categories.find((item) => item.name === category)?.key ?? category}\u0000${channel.name}`)) unmanaged.push(`channel: #${channel.name}`);
+        if (!desiredChannels.has(`${desired.categories.find((item) => item.name === category)?.key ?? category}\u0000${channel.name}`) &&
+            !isDiscordBootstrapChannel(channel.name, category)) {
+            unmanaged.push(`channel: #${channel.name}`);
+        }
     }
     for (const rule of desired.automodRules) {
         const key = typeof rule.key === "string" ? rule.key : "unknown";

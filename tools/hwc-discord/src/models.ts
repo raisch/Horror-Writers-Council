@@ -43,6 +43,7 @@ export interface ActualRole {
     name: string;
     permissions: string;
     position: number;
+    managed: boolean;
 }
 
 export interface ActualCategory {

@@ -22,7 +22,17 @@ export function credentials(guildOverride?: string): { guildId: string; token: s
 export async function buildPlan(guildOverride?: string): Promise<ChangePlan> {
     const { guildId, token } = credentials(guildOverride);
     const actual = normalizeDiscordState(await new DiscordStateReader(guildId, token).read());
-    return createChangePlan(loadDesiredState(), actual, loadStateMapping(guildId));
+    return createChangePlan(loadDesiredState(), actual, loadStateMapping(guildId, actualResourceIds(actual)));
+}
+
+function actualResourceIds(actual: ReturnType<typeof normalizeDiscordState>): string[] {
+    return [
+        actual.guild.discordId,
+        ...actual.roles.map((role) => role.discordId),
+        ...actual.categories.map((category) => category.discordId),
+        ...actual.channels.map((channel) => channel.discordId),
+        ...actual.automodRules.map((rule) => rule.discordId)
+    ];
 }
 
 export function formatPlan(plan: ChangePlan): string {
@@ -174,7 +184,7 @@ export async function apply(guildOverride?: string): Promise<{ applied: number; 
     const desired = loadDesiredState();
     const reader = new DiscordStateReader(guildId, token);
     const actual = normalizeDiscordState(await reader.read());
-    const mapping = loadStateMapping(guildId);
+    const mapping = loadStateMapping(guildId, actualResourceIds(actual));
     const plan = createChangePlan(desired, actual, mapping);
     const writer = new DiscordStateWriter(guildId, token);
     const reason = auditReason();

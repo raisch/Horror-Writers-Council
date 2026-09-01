@@ -79,7 +79,8 @@ export function normalizeDiscordState(raw: ActualDiscordState): ActualState {
                 discordId: id,
                 name,
                 permissions: stringValue(role.permissions) ?? "0",
-                position: numberValue(role.position)
+                position: numberValue(role.position),
+                managed: role.managed === true
             }] : [];
         }),
         categories: raw.channels.flatMap((channel) => {

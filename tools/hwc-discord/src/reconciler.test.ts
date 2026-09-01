@@ -15,8 +15,25 @@ describe("createChangePlan", () => {
         expect(plan.changes.some((item) => item.operation === "CreateCategory")).toBe(true);
         expect(plan.changes.some((item) => item.operation === "CreateChannel")).toBe(true);
 
-        const extra = { ...emptyState, roles: [{ discordId: "extra", name: "Temporary", permissions: "0", position: 1 }] };
+        const extra = { ...emptyState, roles: [{ discordId: "extra", name: "Temporary", permissions: "0", position: 1, managed: false }] };
         expect(createChangePlan(loadDesiredState(), extra, { resources: {} }).unmanaged).toContain("role: Temporary");
+    });
+
+    it("ignores Discord bootstrap resources but reports other unmanaged resources", () => {
+        const state: ActualState = {
+            ...emptyState,
+            roles: [
+                { discordId: "bot", name: "HWC Infrastructure Test", permissions: "0", position: 1, managed: true },
+                { discordId: "extra", name: "Temporary", permissions: "0", position: 2, managed: false }
+            ],
+            categories: [{ discordId: "text", name: "Text Channels", position: 1 }],
+            channels: [
+                { discordId: "general", name: "general", categoryDiscordId: "text", type: "text", position: 0, ageRestricted: false, permissionOverwrites: {}, forumTags: [] }
+            ]
+        };
+
+        const unmanaged = createChangePlan(loadDesiredState(), state, { resources: {} }).unmanaged;
+        expect(unmanaged).toEqual(["role: Temporary"]);
     });
 
     it("does not add permission changes when actual overwrites match", () => {
@@ -25,7 +42,7 @@ describe("createChangePlan", () => {
         const roles = desired.roles.map((role, index) => {
             const id = role.key === "everyone" ? "guild" : `role-${index}`;
             mapping.resources[`roles.${role.key}`] = id;
-            return { discordId: id, name: role.name, permissions: "0", position: role.position };
+            return { discordId: id, name: role.name, permissions: "0", position: role.position, managed: false };
         });
         const categories = desired.categories.map((category) => ({ discordId: `category-${category.key}`, name: category.name, position: category.position }));
         const channels = desired.channels.map((channel) => {
