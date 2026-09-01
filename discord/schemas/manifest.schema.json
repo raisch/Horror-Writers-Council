@@ -206,6 +206,7 @@
             "required": [
                 "manifest_version",
                 "kind",
+                "guardrails",
                 "permission_profiles",
                 "channel_profiles"
             ],
@@ -215,6 +216,9 @@
                 },
                 "kind": {
                     "const": "permissions"
+                },
+                "guardrails": {
+                    "$ref": "#/$defs/permissionGuardrails"
                 },
                 "permission_profiles": {
                     "type": "object",
@@ -254,6 +258,54 @@
                     },
                     "propertyNames": {
                         "pattern": "^[a-z][a-z0-9_]*$"
+                    }
+                }
+            }
+        },
+        "permissionGuardrails": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "forbid_administrator",
+                "private_channels",
+                "mature_channels"
+            ],
+            "properties": {
+                "forbid_administrator": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                        "$ref": "#/$defs/logicalKey"
+                    }
+                },
+                "private_channels": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                            "required_roles"
+                        ],
+                        "properties": {
+                            "required_roles": {
+                                "type": "array",
+                                "minItems": 1,
+                                "uniqueItems": true,
+                                "items": {
+                                    "$ref": "#/$defs/logicalKey"
+                                }
+                            }
+                        }
+                    }
+                },
+                "mature_channels": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                        "$ref": "#/$defs/logicalKey"
                     }
                 }
             }

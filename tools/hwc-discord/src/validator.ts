@@ -110,6 +110,7 @@ export function validateManifests(): ValidationResult {
     const categories = getRecord(manifests.get("categories") ?? {}, "categories");
     const channels = getRecord(manifests.get("channels") ?? {}, "channels");
     const permissions = manifests.get("permissions") ?? {};
+    const guardrails = getRecord(permissions, "guardrails");
     const profiles = getRecord(permissions, "permission_profiles");
     const channelProfiles = getRecord(permissions, "channel_profiles");
     const forums = getRecord(manifests.get("forums") ?? {}, "forums");
@@ -245,6 +246,33 @@ export function validateManifests(): ValidationResult {
         getString(getNestedRecord(profileOverwrites(profileKey), roleKey), "view_channel") === "allow";
     const deniesView = (profileKey: string, roleKey: string): boolean =>
         getString(getNestedRecord(profileOverwrites(profileKey), roleKey), "view_channel") === "deny";
+
+    addMissingReferences(
+        errors,
+        "permissions.guardrails",
+        getArray(guardrails, "forbid_administrator").filter((value): value is string => typeof value === "string"),
+        roleKeys,
+        "role"
+    );
+    addMissingReferences(
+        errors,
+        "permissions.guardrails",
+        getArray(guardrails, "mature_channels").filter((value): value is string => typeof value === "string"),
+        channelKeys,
+        "channel"
+    );
+    for (const [channelKey, rule] of Object.entries(getRecord(guardrails, "private_channels"))) {
+        if (!channelKeys.has(channelKey)) errors.push(`permissions.guardrails: private channel does not exist: ${channelKey}`);
+        const profileKey = getString(channelProfiles, channelKey);
+        for (const roleKey of getArray(getNestedRecord(getRecord(guardrails, "private_channels"), channelKey), "required_roles")) {
+            if (typeof roleKey !== "string") continue;
+            if (!roleKeys.has(roleKey)) errors.push(`permissions.guardrails.${channelKey}: required role does not exist: ${roleKey}`);
+            if (!profileKey || !canView(profileKey, roleKey)) {
+                errors.push(`permissions.guardrails.${channelKey}: ${roleKey} must be allowed to view the channel`);
+            }
+        }
+        if (!asRecord(rule)) errors.push(`permissions.guardrails.${channelKey}: private channel rule must be an object`);
+    }
 
     if (!deniesView("mature_chat", "everyone") || !canView("mature_chat", "mature_content")) {
         errors.push("permissions.mature_chat: restricted channels must deny everyone and allow Mature Content");

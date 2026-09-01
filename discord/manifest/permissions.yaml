@@ -1,6 +1,25 @@
 manifest_version: 1
 kind: permissions
 
+guardrails:
+  forbid_administrator:
+    - councilor
+    - moderator
+    - workshop_coordinator
+  private_channels:
+    council_chamber:
+      required_roles:
+        - councilor
+    moderator_watch:
+      required_roles:
+        - moderator
+    archivists_workbench:
+      required_roles:
+        - archivist
+  mature_channels:
+    - mature_horror_craft
+    - restricted_workshop
+
 permission_profiles:
   public_read_only:
     overwrites:

@@ -71,6 +71,10 @@ export class DiscordStateReader {
         return this.getObject(`/guilds/${this.guildId}/onboarding`, "onboarding") as Promise<DiscordOnboarding>;
     }
 
+    async getAuditLog(): Promise<Record<string, unknown>> {
+        return this.getObject(`/guilds/${this.guildId}/audit-logs`, "audit-log") as Promise<Record<string, unknown>>;
+    }
+
     getForumConfiguration(channels: DiscordChannel[]): DiscordChannel[] {
         return channels.filter((channel) => channel.type === 15);
     }
