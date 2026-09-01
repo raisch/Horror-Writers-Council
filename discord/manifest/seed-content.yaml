@@ -15,7 +15,7 @@ seed_content:
     source: community-standards.md
     pin: true
   workshop_guide:
-    channel: critique_requests
+    channel: craft_after_dark
     source: discord/seed-content/workshop-guide.md
     pin: true
   reporting:

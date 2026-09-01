@@ -4,9 +4,12 @@ kind: onboarding
 enabled: true
 default_channels:
   - welcome_to_the_house
-  - start_here
   - community_standards
-  - announcements
+  - questions_for_the_keepers
+  - introductions
+  - orientation_chat
+  - access_and_roles
+  - community_lounge
 
 # Onboarding routes interests; Membership Screening handles rules and 18+ acknowledgment.
 prompts:

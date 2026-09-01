@@ -43,8 +43,12 @@ export class DiscordStateWriter {
         return this.rest.post(`/guilds/${this.guildId}/auto-moderation/rules`, { body, reason });
     }
 
+    updateAutoModRule(ruleId: string, body: Record<string, unknown>, reason: string): Promise<unknown> {
+        return this.rest.patch(`/guilds/${this.guildId}/auto-moderation/rules/${ruleId}`, { body, reason });
+    }
+
     updateOnboarding(body: Record<string, unknown>, reason: string): Promise<unknown> {
-        return this.rest.patch(`/guilds/${this.guildId}/onboarding`, { body, reason });
+        return this.rest.put(`/guilds/${this.guildId}/onboarding`, { body, reason });
     }
 
     createMessage(channelId: string, content: string, reason: string): Promise<unknown> {

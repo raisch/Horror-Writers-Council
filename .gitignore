@@ -3,4 +3,5 @@ tools/hwc-discord/node_modules/
 tools/hwc-discord/dist/
 tools/hwc-discord/.env
 discord/.state.json
+discord/state/
 discord/audit-logs/

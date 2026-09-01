@@ -66,6 +66,7 @@ If the token is exposed, immediately reset it in the Developer Portal and update
    - `bot`
    - `applications.commands`
 3. Under **Bot Permissions**, select the temporary bootstrap permissions:
+   - Administrator
    - Manage Server
    - Manage Roles
    - Manage Channels
@@ -83,7 +84,7 @@ If the token is exposed, immediately reset it in the Developer Portal and update
 4. Open the generated URL in a private browser window or a normal browser session where you are logged into the account that owns the test server.
 5. Select only the disposable test server and authorize the installation.
 
-Do not grant the bot Discord's `Administrator` permission. The test is intended to expose missing permission requirements, not to bypass the intended controls.
+Discord requires `Administrator` permission to enable Community mode through its API. Grant it only for this disposable-server bootstrap. After the initial `apply`, remove `Administrator` and retain only the smallest permission set proven necessary by the completed provisioning and verification run.
 
 ## 5. Configure Local Credentials
 
@@ -120,6 +121,8 @@ The bot cannot manage a Discord role at or above its own highest role.
 
 The generated `Archivist` role is not the same as Discord's Server Owner authority. Keep your Discord account as the server owner throughout testing.
 
+The temporary `Administrator` grant is required only while the tool enables Community mode. Do not use it as the production permission model.
+
 ## 7. Review the Blank-Server Plan
 
 Back in `tools/hwc-discord`, run:
@@ -143,7 +146,7 @@ Apply only after reviewing the generated plan:
 node dist/main.js apply --yes
 ```
 
-The command uses an audit-log reason containing the current Git commit SHA. It writes Discord resource IDs to `discord/.state.json`, which is ignored by Git.
+The command uses an audit-log reason containing the current Git commit SHA. It writes Discord resource IDs to `discord/state/<server-id>.json`, which is ignored by Git. A different test-server ID therefore receives an empty, separate mapping automatically.
 
 If the command fails, do not retry blindly. Capture the error, inspect the Discord Audit Log, correct the specific manifest or implementation issue, and start again with a new empty test server if partial setup makes the result unclear.
 
@@ -164,6 +167,14 @@ Expected result:
 - `snapshot` creates a timestamped directory under `discord/snapshots/` whose `metadata.json` marks the snapshot as `authoritative: false`.
 
 If a plan still shows changes, treat that as a failed idempotency test. Do not manually edit Discord to make it pass; fix the tool’s normalization, reconciliation, or apply behavior and rebuild the server.
+
+After successful verification, remove `Administrator` from the Infrastructure Bot role and rerun `node dist/main.js plan` and `node dist/main.js verify`. Record any missing permissions before considering a lower-privilege production deployment.
+
+### Onboarding Activation Constraint
+
+Discord will not enable Community Onboarding unless at least seven default channels are configured and at least five of those channels allow `@everyone` to send messages. The manifest meets this constraint through five public, onboarding-only Threshold channels: `#questions-for-the-keepers`, `#introductions`, `#orientation-chat`, `#access-and-roles`, and `#community-lounge`.
+
+These channels are deliberately limited to access, orientation, introductions, and low-stakes conversation. Commons, Workroom, mature-content, governance, and reporting channels remain outside the public default-channel set and continue to require their intended access roles.
 
 ## 10. Complete Manual Membership Screening
 
@@ -189,7 +200,7 @@ Use a second test account or temporary role assignments to confirm the security 
 - A Moderator can access `#moderator-watch` but not `#council-chamber` by default.
 - Only the Archivist can access `#archivists-workbench` by default.
 - All managed onboarding and policy messages are present and pinned in their target channels.
-- `#announcements` is readable by members and is selected as the Community public-updates channel.
+- `#moderator-watch` is selected as the Community public-updates channel for Discord administrator notices.
 
 Run a drift check after these tests:
 
@@ -225,7 +236,7 @@ The result is saved under `discord/audit-logs/`, which is ignored by Git. It con
 
 The essential disaster-recovery test is a fresh reconstruction:
 
-1. Preserve only the repository manifests and the generated state mapping as evidence; do not copy channels or settings manually.
+1. Preserve only the repository manifests and the generated state mapping for the first server as evidence; do not copy channels or settings manually.
 2. Create a second blank disposable server.
 3. Repeat Steps 2 through 10 using that second server ID.
 4. Compare the second server’s plan and snapshot to the first server’s desired state.

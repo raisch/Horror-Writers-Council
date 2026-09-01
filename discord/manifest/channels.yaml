@@ -32,6 +32,30 @@ channels:
     type: text
     lifecycle: permanent
     description: Public questions about rules, access, and server operations.
+  introductions:
+    name: introductions
+    category: threshold
+    type: text
+    lifecycle: permanent
+    description: Public introductions before completing the membership process.
+  orientation_chat:
+    name: orientation-chat
+    category: threshold
+    type: text
+    lifecycle: permanent
+    description: Public conversation about joining and using the server.
+  access_and_roles:
+    name: access-and-roles
+    category: threshold
+    type: text
+    lifecycle: permanent
+    description: Public help with membership access, roles, and channel visibility.
+  community_lounge:
+    name: community-lounge
+    category: threshold
+    type: text
+    lifecycle: permanent
+    description: Public, low-stakes conversation before membership screening is complete.
   contact_the_council:
     name: contact-the-council
     category: threshold

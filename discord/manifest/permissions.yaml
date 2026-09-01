@@ -35,6 +35,17 @@ permission_profiles:
         send_messages: allow
         manage_channels: allow
 
+  public_chat:
+    overwrites:
+      everyone:
+        view_channel: allow
+        read_message_history: allow
+        send_messages: allow
+      moderator:
+        manage_messages: allow
+      archivist:
+        manage_channels: allow
+
   member_read_only:
     overwrites:
       everyone:
@@ -154,7 +165,11 @@ channel_profiles:
   start_here: public_read_only
   community_standards: public_read_only
   announcements: public_read_only
-  questions_for_the_keepers: member_chat
+  questions_for_the_keepers: public_chat
+  introductions: public_chat
+  orientation_chat: public_chat
+  access_and_roles: public_chat
+  community_lounge: public_chat
   contact_the_council: member_chat
   the_flickering_lamp: member_chat
   what_are_you_writing: member_chat

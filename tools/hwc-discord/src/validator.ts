@@ -232,6 +232,12 @@ export function validateManifests(): ValidationResult {
         if (channel !== undefined && !channelKeys.has(channel)) {
             errors.push(`seed_content.${seedKey}: channel reference does not exist: ${channel}`);
         }
+        if (channel !== undefined) {
+            const channelType = getString(getNestedRecord(channels, channel), "type");
+            if (channelType !== "text" && channelType !== "announcement") {
+                errors.push(`seed_content.${seedKey}: managed messages require a text or announcement channel`);
+            }
+        }
         if (source !== undefined && !existsSync(resolve(repositoryRoot, source))) {
             errors.push(`seed_content.${seedKey}: source file does not exist: ${source}`);
         }

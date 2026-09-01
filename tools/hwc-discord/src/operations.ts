@@ -22,7 +22,7 @@ export function credentials(guildOverride?: string): { guildId: string; token: s
 export async function buildPlan(guildOverride?: string): Promise<ChangePlan> {
     const { guildId, token } = credentials(guildOverride);
     const actual = normalizeDiscordState(await new DiscordStateReader(guildId, token).read());
-    return createChangePlan(loadDesiredState(), actual, loadStateMapping());
+    return createChangePlan(loadDesiredState(), actual, loadStateMapping(guildId));
 }
 
 export function formatPlan(plan: ChangePlan): string {
@@ -75,6 +75,7 @@ export function driftReport(plan: ChangePlan): string {
 }
 
 const channelTypeNumbers = { text: 0, voice: 2, announcement: 5, forum: 15 } as const;
+const discordEpoch = 1420070400000n;
 const permissionBits: Record<string, bigint> = {
     manage_channels: 1n << 4n,
     view_channel: 1n << 10n,
@@ -101,16 +102,90 @@ function auditReason(): string {
     }
 }
 
+function onboardingSnowflake(mapping: ReturnType<typeof loadStateMapping>, key: string, sequence: number): string {
+    const mappingKey = `onboarding.${key}`;
+    const existing = mapping.resources[mappingKey];
+    if (existing) return existing;
+    const id = ((BigInt(Date.now()) - discordEpoch) << 22n | BigInt(sequence & 0x3fffff)).toString();
+    mapping.resources[mappingKey] = id;
+    return id;
+}
+
+export function splitMessageContent(content: string, maximumLength = 2000): string[] {
+    if (content.length <= maximumLength) return [content];
+    const segments: string[] = [];
+    let segment = "";
+    for (const paragraph of content.split(/(\n\n)/)) {
+        if (paragraph.length > maximumLength) {
+            if (segment) segments.push(segment);
+            for (let start = 0; start < paragraph.length; start += maximumLength) {
+                segments.push(paragraph.slice(start, start + maximumLength));
+            }
+            segment = "";
+        } else if (segment.length + paragraph.length > maximumLength) {
+            segments.push(segment);
+            segment = paragraph;
+        } else {
+            segment += paragraph;
+        }
+    }
+    if (segment) segments.push(segment);
+    return segments;
+}
+
+export function buildOnboardingPayload(desired: ReturnType<typeof loadDesiredState>, mapping: ReturnType<typeof loadStateMapping>): Record<string, unknown> {
+    const prompts = Array.isArray(desired.onboarding.prompts)
+        ? desired.onboarding.prompts.flatMap((prompt, promptIndex) => {
+            if (typeof prompt !== "object" || prompt === null) return [];
+            const value = prompt as Record<string, unknown>;
+            const promptKey = String(value.key);
+            return [{
+                id: onboardingSnowflake(mapping, `prompts.${promptKey}`, promptIndex),
+                title: String(value.question),
+                type: 0,
+                required: value.required === true,
+                single_select: value.multiple !== true,
+                in_onboarding: true,
+                options: Array.isArray(value.options) ? value.options.map((option, optionIndex) => {
+                    const optionValue = option as Record<string, unknown>;
+                    const channelIds = Array.isArray(optionValue.channels)
+                        ? optionValue.channels.map((key) => mapping.resources[`channels.${String(key)}`]).filter(Boolean)
+                        : [];
+                    return {
+                        id: onboardingSnowflake(mapping, `prompts.${promptKey}.options.${optionIndex}`, 100 + promptIndex * 100 + optionIndex),
+                        title: String(optionValue.label),
+                        channel_ids: channelIds.length > 0
+                            ? channelIds
+                            : [mapping.resources["channels.start_here"]],
+                        role_ids: []
+                    };
+                }) : []
+            }];
+        })
+        : [];
+    const defaultChannelIds = Array.isArray(desired.onboarding.default_channels)
+        ? desired.onboarding.default_channels.map((key) => mapping.resources[`channels.${String(key)}`]).filter(Boolean)
+        : [];
+    return { enabled: desired.onboarding.enabled === true, default_channel_ids: defaultChannelIds, prompts };
+}
+
 export async function apply(guildOverride?: string): Promise<{ applied: number; skipped: number }> {
     const { guildId, token } = credentials(guildOverride);
     const desired = loadDesiredState();
     const reader = new DiscordStateReader(guildId, token);
     const actual = normalizeDiscordState(await reader.read());
-    const mapping = loadStateMapping();
+    const mapping = loadStateMapping(guildId);
+    const plan = createChangePlan(desired, actual, mapping);
     const writer = new DiscordStateWriter(guildId, token);
     const reason = auditReason();
     let applied = 0;
     let skipped = 0;
+
+    const saveProgress = (): void => saveStateMapping(guildId, mapping);
+    const hasChange = (operation: string, resource?: string): boolean =>
+        plan.changes.some((change) => change.operation === operation && (resource === undefined || change.resource === resource));
+    const hasChangePrefix = (operation: string, resourcePrefix: string): boolean =>
+        plan.changes.some((change) => change.operation === operation && change.resource.startsWith(resourcePrefix));
 
     for (const role of desired.roles.filter((role) => role.provisioning === "create")) {
         const existing = actual.roles.find((item) => item.name === role.name);
@@ -118,6 +193,7 @@ export async function apply(guildOverride?: string): Promise<{ applied: number; 
         if (!id) throw new Error(`Discord did not return an ID while creating role ${role.name}.`);
         mapping.resources[`roles.${role.key}`] = id;
         if (!existing) applied++;
+        saveProgress();
     }
     for (const category of desired.categories) {
         const existing = actual.categories.find((item) => item.name === category.name);
@@ -125,15 +201,41 @@ export async function apply(guildOverride?: string): Promise<{ applied: number; 
         if (!id) throw new Error(`Discord did not return an ID while creating category ${category.name}.`);
         mapping.resources[`categories.${category.key}`] = id;
         if (!existing) applied++;
+        saveProgress();
     }
-    for (const channel of desired.channels) {
+
+    const createChannel = async (channel: typeof desired.channels[number]): Promise<void> => {
         const existing = actual.channels.find((item) => item.name === channel.name && item.type === channel.type);
         const id = existing?.discordId ?? resourceId(await writer.createChannel(channel.name, channelTypeNumbers[channel.type], mapping.resources[`categories.${channel.category}`], reason));
         if (!id) throw new Error(`Discord did not return an ID while creating channel ${channel.name}.`);
         mapping.resources[`channels.${channel.key}`] = id;
         if (!existing) applied++;
+        saveProgress();
+    };
+
+    for (const channel of desired.channels.filter((channel) => channel.type === "text" || channel.type === "voice")) {
+        await createChannel(channel);
+    }
+
+    const bootstrapUpdatesChannel = mapping.resources[`channels.${String(desired.community.public_updates_channel)}`]
+        ?? mapping.resources[`channels.${String(desired.community.rules_channel)}`];
+    if (!actual.guild.communityEnabled) {
+        await writer.updateGuild({
+            features: ["COMMUNITY"],
+            verification_level: 2,
+            explicit_content_filter: 2,
+            rules_channel_id: mapping.resources[`channels.${String(desired.community.rules_channel)}`],
+            public_updates_channel_id: bootstrapUpdatesChannel,
+            safety_alerts_channel_id: mapping.resources[`channels.${String(desired.community.safety_alerts_channel)}`]
+        }, reason);
+        applied++;
+    }
+
+    for (const channel of desired.channels.filter((channel) => channel.type === "announcement" || channel.type === "forum")) {
+        await createChannel(channel);
     }
     for (const [channelKey, profileKey] of Object.entries(desired.channelProfiles)) {
+        if (!hasChange("SetPermissionOverwrite", `permissions.${channelKey}`)) continue;
         const channelId = mapping.resources[`channels.${channelKey}`];
         const profile = desired.permissionProfiles[profileKey];
         if (!channelId || !profile) continue;
@@ -150,16 +252,19 @@ export async function apply(guildOverride?: string): Promise<{ applied: number; 
             applied++;
         }
     }
-    await writer.updateGuild({
-        features: ["COMMUNITY"],
-        verification_level: 2,
-        explicit_content_filter: 2,
-        rules_channel_id: mapping.resources[`channels.${String(desired.community.rules_channel)}`],
-        public_updates_channel_id: mapping.resources[`channels.${String(desired.community.public_updates_channel)}`],
-        safety_alerts_channel_id: mapping.resources[`channels.${String(desired.community.safety_alerts_channel)}`]
-    }, reason);
-    applied++;
+    if (hasChange("ModifyGuild", "guild")) {
+        await writer.updateGuild({
+            features: ["COMMUNITY"],
+            verification_level: 2,
+            explicit_content_filter: 2,
+            rules_channel_id: mapping.resources[`channels.${String(desired.community.rules_channel)}`],
+            public_updates_channel_id: mapping.resources[`channels.${String(desired.community.public_updates_channel)}`],
+            safety_alerts_channel_id: mapping.resources[`channels.${String(desired.community.safety_alerts_channel)}`]
+        }, reason);
+        applied++;
+    }
     for (const [channelKey, tags] of Object.entries(desired.forums)) {
+        if (!hasChangePrefix("CreateForumTag", `forums.${channelKey}.`)) continue;
         const channelId = mapping.resources[`channels.${channelKey}`];
         const existing = actual.channels.find((channel) => channel.discordId === channelId);
         if (channelId && (!existing || existing.forumTags.length === 0)) {
@@ -169,62 +274,73 @@ export async function apply(guildOverride?: string): Promise<{ applied: number; 
     }
     for (const rule of desired.automodRules) {
         const key = typeof rule.key === "string" ? rule.key : "";
-        if (!key || mapping.resources[`automod.${key}`]) continue;
+        if (!key) continue;
+        if (!hasChange("CreateAutoModRule", `automod.${key}`) && !hasChange("UpdateAutoModRule", `automod.${key}`)) continue;
         const trigger = rule.trigger === "keyword" ? 1 : rule.trigger === "spam" ? 3 : 5;
+        const existing = actual.automodRules.find((item) => item.discordId === mapping.resources[`automod.${key}`])
+            ?? (trigger === 1 ? undefined : actual.automodRules.find((item) => item.triggerType === trigger));
         const actions = Array.isArray(rule.actions) ? rule.actions : [];
         const actionMetadata = actions.map((action) => action === "send_alert" ? {
             type: 2,
             metadata: { channel_id: mapping.resources[`channels.${String(rule.alert_channel)}`] }
         } : { type: 1, metadata: {} });
-        const created = await writer.createAutoModRule({
+        const body = {
             name: rule.name,
             event_type: 1,
             trigger_type: trigger,
             trigger_metadata: rule.trigger_metadata ?? {},
             actions: actionMetadata,
             enabled: true
-        }, reason);
-        const id = resourceId(created);
+        };
+        const response = existing
+            ? await writer.updateAutoModRule(existing.discordId, body, reason)
+            : await writer.createAutoModRule(body, reason);
+        const id = existing?.discordId ?? resourceId(response);
         if (id) mapping.resources[`automod.${key}`] = id;
         applied++;
+        saveProgress();
     }
-    const onboardingOptions = Array.isArray(desired.onboarding.prompts)
-        ? desired.onboarding.prompts.flatMap((prompt) => {
-            if (typeof prompt !== "object" || prompt === null) return [];
-            const value = prompt as Record<string, unknown>;
-            return [{
-                id: String(value.key),
-                title: String(value.question),
-                type: 0,
-                required: value.required === true,
-                single_select: value.multiple !== true,
-                options: Array.isArray(value.options) ? value.options.map((option) => {
-                    const optionValue = option as Record<string, unknown>;
-                    return { id: String(optionValue.label), title: String(optionValue.label), channel_ids: Array.isArray(optionValue.channels) ? optionValue.channels.map((key) => mapping.resources[`channels.${String(key)}`]).filter(Boolean) : [] };
-                }) : []
-            }];
+    const onboardingPayload = buildOnboardingPayload(desired, mapping);
+    const defaultChannelIds = onboardingPayload.default_channel_ids as string[];
+    const publicDefaultChannels = Array.isArray(desired.onboarding.default_channels)
+        ? desired.onboarding.default_channels.filter((key) => {
+            const profile = desired.channelProfiles[String(key)];
+            return profile !== undefined && desired.permissionProfiles[profile]?.everyone?.send_messages === "allow";
         })
         : [];
-    await writer.updateOnboarding({
-        enabled: true,
-        default_channel_ids: Array.isArray(desired.onboarding.default_channels)
-            ? desired.onboarding.default_channels.map((key) => mapping.resources[`channels.${String(key)}`]).filter(Boolean)
-            : [],
-        prompts: onboardingOptions
-    }, reason);
-    applied++;
+    if (desired.onboarding.enabled === true && (defaultChannelIds.length < 7 || publicDefaultChannels.length < 5)) {
+        throw new Error("Onboarding cannot be enabled: Discord requires at least 7 default channels, including 5 where @everyone can send messages. Update onboarding and permission manifests before enabling it.");
+    }
+    if (hasChange("ModifyOnboarding", "onboarding")) {
+        saveProgress();
+        await writer.updateOnboarding(onboardingPayload, reason);
+        applied++;
+    }
     for (const [key, entry] of Object.entries(desired.seedContent)) {
-        if (mapping.resources[`seed.${key}`]) continue;
+        if (!hasChange("CreateSeedContent", `seed.${key}`)) continue;
         const channelId = mapping.resources[`channels.${String(entry.channel)}`];
         const source = typeof entry.source === "string" ? entry.source : "";
         if (!channelId || !source) continue;
-        const messageId = resourceId(await writer.createMessage(channelId, readFileSync(resolve(root, source), "utf8"), reason));
-        if (!messageId) throw new Error(`Discord did not return an ID while creating seed message ${key}.`);
-        if (entry.pin === true) await writer.pinMessage(channelId, messageId, reason);
-        mapping.resources[`seed.${key}`] = messageId;
-        applied++;
+        const segments = splitMessageContent(readFileSync(resolve(root, source), "utf8"));
+        for (const [index, content] of segments.entries()) {
+            const mappingKey = `seed.${key}.${index}`;
+            if (mapping.resources[mappingKey]) continue;
+            const legacyMessage = index === 0 ? mapping.resources[`seed.${key}`] : undefined;
+            if (legacyMessage) {
+                mapping.resources[mappingKey] = legacyMessage;
+                delete mapping.resources[`seed.${key}`];
+                saveProgress();
+                continue;
+            }
+            const messageId = resourceId(await writer.createMessage(channelId, content, reason));
+            if (!messageId) throw new Error(`Discord did not return an ID while creating seed message ${key} segment ${index + 1}.`);
+            if (entry.pin === true && index === 0) await writer.pinMessage(channelId, messageId, reason);
+            mapping.resources[mappingKey] = messageId;
+            applied++;
+            saveProgress();
+        }
     }
-    skipped += createChangePlan(desired, actual, mapping).changes.filter((item) => item.risk === "DESTRUCTIVE").length;
-    saveStateMapping(mapping);
+    skipped += plan.changes.filter((item) => item.risk === "DESTRUCTIVE").length;
+    saveStateMapping(guildId, mapping);
     return { applied, skipped };
 }
