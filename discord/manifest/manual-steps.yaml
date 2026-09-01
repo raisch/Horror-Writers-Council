@@ -1,0 +1,10 @@
+manifest_version: 1
+kind: manual_steps
+
+manual_steps:
+  - key: membership_screening
+    required: true
+    title: Configure Membership Screening
+    location: Server Settings > Safety Setup > Membership Screening
+    instructions: Enable Membership Screening and require acceptance of the Community Standards and confirmation of 18+ eligibility.
+    verification: Confirm new members remain pending until they accept both requirements.

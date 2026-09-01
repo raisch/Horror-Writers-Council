@@ -1,0 +1,24 @@
+manifest_version: 1
+kind: seed_content
+
+seed_content:
+  welcome:
+    channel: welcome_to_the_house
+    source: discord/seed-content/welcome.md
+    pin: true
+  start_here:
+    channel: start_here
+    source: discord/seed-content/start-here.md
+    pin: true
+  community_standards:
+    channel: community_standards
+    source: community-standards.md
+    pin: true
+  workshop_guide:
+    channel: critique_requests
+    source: discord/seed-content/workshop-guide.md
+    pin: true
+  reporting:
+    channel: contact_the_council
+    source: discord/seed-content/reporting.md
+    pin: true

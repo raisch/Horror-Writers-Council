@@ -1,0 +1,30 @@
+{
+    "name": "hwc-discord",
+    "version": "0.1.0",
+    "private": true,
+    "description": "Discord infrastructure-as-code tooling for the Horror Writers Council.",
+    "type": "module",
+    "engines": {
+        "node": ">=22"
+    },
+    "bin": {
+        "hwc": "dist/main.js"
+    },
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "check": "tsc -p tsconfig.json --noEmit",
+        "test": "vitest run --passWithNoTests"
+    },
+    "dependencies": {
+        "ajv": "^8.17.1",
+        "commander": "^14.0.1",
+        "discord.js": "^14.22.1",
+        "pino": "^9.9.4",
+        "yaml": "^2.8.1"
+    },
+    "devDependencies": {
+        "@types/node": "^22.18.6",
+        "typescript": "^5.9.2",
+        "vitest": "^3.2.4"
+    }
+}

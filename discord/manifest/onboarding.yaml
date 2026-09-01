@@ -1,0 +1,50 @@
+manifest_version: 1
+kind: onboarding
+
+enabled: true
+default_channels:
+  - welcome_to_the_house
+  - start_here
+  - community_standards
+  - announcements
+
+# Onboarding routes interests; Membership Screening handles rules and 18+ acknowledgment.
+prompts:
+  - key: interests
+    question: What brings you here?
+    required: false
+    multiple: true
+    options:
+      - label: Writing craft
+        channels:
+          - craft_after_dark
+          - brainstorming_seance
+          - revision_table
+      - label: Critique and workshops
+        channels:
+          - first_sightings
+          - critique_requests
+          - critique_exchange
+      - label: Reading horror
+        channels:
+          - horror_reading_room
+          - screen_and_scream
+      - label: Publishing and markets
+        channels:
+          - calls_from_the_dark
+          - market_watch
+      - label: Events and co-working
+        channels:
+          - quiet_company
+          - events_in_the_lantern_room
+          - the_lantern_room
+  - key: mature_content_access
+    question: Would you like access to mature-content areas?
+    required: false
+    multiple: false
+    options:
+      - label: Not now
+        channels: []
+      - label: Show me how to opt in
+        channels:
+          - content_warning_desk

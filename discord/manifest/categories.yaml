@@ -1,0 +1,41 @@
+manifest_version: 1
+kind: categories
+
+# Listed in the order categories should appear in Discord.
+category_order:
+  - threshold
+  - commons
+  - workroom
+  - red_room
+  - notice_board
+  - council
+  - voice
+
+categories:
+  threshold:
+    name: THE THRESHOLD
+    description: Onboarding, rules, announcements, and reporting entry points.
+
+  commons:
+    name: THE COMMONS
+    description: Everyday member conversation and co-working.
+
+  workroom:
+    name: THE WORKROOM
+    description: Human-only craft discussion and opt-in creative exchange.
+
+  red_room:
+    name: THE RED ROOM
+    description: Age-gated, opt-in discussion and workshops for mature horror content.
+
+  notice_board:
+    name: THE NOTICE BOARD
+    description: Professional opportunities, member promotion, and community events.
+
+  council:
+    name: THE COUNCIL CHAMBER
+    description: Public governance records and private Council, moderation, and technical administration.
+
+  voice:
+    name: VOICE & EVENTS
+    description: Optional voice channels for conversation, co-working, readings, and Council meetings.

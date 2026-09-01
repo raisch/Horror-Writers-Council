@@ -1,0 +1,76 @@
+manifest_version: 1
+kind: roles
+
+# Listed highest to lowest. The Infrastructure Bot must remain below the Archivist.
+role_order:
+  - archivist
+  - infrastructure_bot
+  - councilor
+  - council_chair
+  - moderator
+  - workshop_coordinator
+  - election_administrator
+  - mature_content
+  - member
+  - everyone
+
+roles:
+  archivist:
+    name: Archivist
+    category: infrastructure
+    provisioning: create
+    description: Technical custodian who holds Discord's Server Owner role.
+
+  infrastructure_bot:
+    name: Infrastructure Bot
+    category: infrastructure
+    provisioning: create
+    description: Service role used by the HWC infrastructure application.
+
+  councilor:
+    name: Councilor
+    category: governance
+    provisioning: create
+    description: Elected member of the Council of Elders.
+
+  council_chair:
+    name: Council Chair
+    category: governance
+    provisioning: create
+    description: Institutional designation for the Councilor elected to chair a term; no additional Discord authority.
+
+  moderator:
+    name: Moderator
+    category: governance
+    provisioning: create
+    description: Council-appointed role for day-to-day application of Community Standards.
+
+  workshop_coordinator:
+    name: Workshop Coordinator
+    category: governance
+    provisioning: create
+    description: Operational role for administering workshop access and scheduling.
+
+  election_administrator:
+    name: Election Administrator
+    category: governance
+    provisioning: create
+    description: Operational role for administering elections and preserving election records.
+
+  mature_content:
+    name: Mature Content
+    category: membership
+    provisioning: create
+    description: Opt-in access role for age-restricted mature-content channels.
+
+  member:
+    name: Member
+    category: membership
+    provisioning: create
+    description: Member who has completed the server membership process.
+
+  everyone:
+    name: "@everyone"
+    category: system
+    provisioning: system
+    description: Discord's built-in guild-wide role; referenced by permissions but never created or reordered.

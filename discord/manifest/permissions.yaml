@@ -1,0 +1,170 @@
+manifest_version: 1
+kind: permissions
+
+permission_profiles:
+  public_read_only:
+    overwrites:
+      everyone:
+        view_channel: allow
+        read_message_history: allow
+        send_messages: deny
+      councilor:
+        send_messages: allow
+      moderator:
+        send_messages: allow
+      archivist:
+        send_messages: allow
+        manage_channels: allow
+
+  member_read_only:
+    overwrites:
+      everyone:
+        view_channel: deny
+      member:
+        view_channel: allow
+        read_message_history: allow
+        send_messages: deny
+      councilor:
+        send_messages: allow
+      moderator:
+        send_messages: allow
+      archivist:
+        send_messages: allow
+        manage_channels: allow
+
+  member_chat:
+    overwrites:
+      everyone:
+        view_channel: deny
+      member:
+        view_channel: allow
+        read_message_history: allow
+        send_messages: allow
+      councilor:
+        manage_channels: allow
+      moderator:
+        manage_messages: allow
+      archivist:
+        manage_channels: allow
+
+  mature_chat:
+    overwrites:
+      everyone:
+        view_channel: deny
+      mature_content:
+        view_channel: allow
+        read_message_history: allow
+        send_messages: allow
+      councilor:
+        manage_channels: allow
+      moderator:
+        manage_messages: allow
+      archivist:
+        manage_channels: allow
+
+  council_private:
+    overwrites:
+      everyone:
+        view_channel: deny
+      councilor:
+        view_channel: allow
+        read_message_history: allow
+        send_messages: allow
+      archivist:
+        view_channel: allow
+        read_message_history: allow
+        send_messages: allow
+        manage_channels: allow
+
+  moderator_private:
+    overwrites:
+      everyone:
+        view_channel: deny
+      moderator:
+        view_channel: allow
+        read_message_history: allow
+        send_messages: allow
+        manage_messages: allow
+      archivist:
+        view_channel: allow
+        read_message_history: allow
+        send_messages: allow
+        manage_channels: allow
+
+  archivist_private:
+    overwrites:
+      everyone:
+        view_channel: deny
+      archivist:
+        view_channel: allow
+        read_message_history: allow
+        send_messages: allow
+        manage_channels: allow
+
+  member_voice:
+    overwrites:
+      everyone:
+        view_channel: deny
+      member:
+        view_channel: allow
+        connect: allow
+        speak: allow
+      councilor:
+        manage_channels: allow
+      moderator:
+        move_members: allow
+      archivist:
+        manage_channels: allow
+
+  council_voice:
+    overwrites:
+      everyone:
+        view_channel: deny
+      councilor:
+        view_channel: allow
+        connect: allow
+        speak: allow
+      archivist:
+        view_channel: allow
+        connect: allow
+        speak: allow
+        manage_channels: allow
+
+channel_profiles:
+  welcome_to_the_house: public_read_only
+  start_here: public_read_only
+  community_standards: public_read_only
+  announcements: public_read_only
+  questions_for_the_keepers: member_chat
+  contact_the_council: member_chat
+  the_flickering_lamp: member_chat
+  what_are_you_writing: member_chat
+  horror_reading_room: member_chat
+  screen_and_scream: member_chat
+  the_research_cabinet: member_chat
+  quiet_company: member_chat
+  craft_after_dark: member_chat
+  brainstorming_seance: member_chat
+  first_sightings: member_chat
+  critique_requests: member_chat
+  critique_exchange: member_chat
+  revision_table: member_chat
+  the_unquiet_shelf: member_chat
+  mature_horror_craft: mature_chat
+  restricted_workshop: mature_chat
+  content_warning_desk: member_chat
+  calls_from_the_dark: member_chat
+  market_watch: member_chat
+  member_publications: member_chat
+  services_and_collaborators: member_chat
+  events_in_the_lantern_room: member_chat
+  governance_hall: member_chat
+  council_record: member_read_only
+  election_booth: member_read_only
+  council_chamber: council_private
+  moderator_watch: moderator_private
+  archivists_workbench: archivist_private
+  the_lantern_room: member_voice
+  the_night_workshop: member_voice
+  the_reading: member_voice
+  council_meeting_room: council_voice

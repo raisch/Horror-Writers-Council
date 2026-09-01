@@ -1,0 +1,41 @@
+manifest_version: 1
+kind: automod
+
+rules:
+  - key: mention_spam
+    name: Block mention spam
+    trigger: mention_spam
+    trigger_metadata:
+      mention_limit: 5
+    actions:
+      - block_message
+      - send_alert
+    alert_channel: moderator_watch
+  - key: message_spam
+    name: Block message spam
+    trigger: spam
+    actions:
+      - block_message
+      - send_alert
+    alert_channel: moderator_watch
+  - key: invite_spam
+    name: Block unsolicited Discord invites
+    trigger: keyword
+    trigger_metadata:
+      keyword_patterns:
+        - "(?:discord(?:app)?\\.com/invite|discord\\.gg)/[A-Za-z0-9-]+"
+    actions:
+      - block_message
+      - send_alert
+    alert_channel: moderator_watch
+  - key: common_scam_phrases
+    name: Block common scam phrases
+    trigger: keyword
+    trigger_metadata:
+      keyword_patterns:
+        - "free nitro"
+        - "steamcommunity\\.com/gift"
+    actions:
+      - block_message
+      - send_alert
+    alert_channel: moderator_watch

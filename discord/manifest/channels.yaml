@@ -1,0 +1,232 @@
+manifest_version: 1
+kind: channels
+
+channels:
+  welcome_to_the_house:
+    name: welcome-to-the-house
+    category: threshold
+    type: text
+    lifecycle: permanent
+    description: Server introduction and orientation.
+  start_here:
+    name: start-here
+    category: threshold
+    type: text
+    lifecycle: permanent
+    description: Joining steps, role selection, and wayfinding.
+  community_standards:
+    name: community-standards
+    category: threshold
+    type: text
+    lifecycle: permanent
+    description: Community Standards, member rights, and conduct expectations.
+  announcements:
+    name: announcements
+    category: threshold
+    type: announcement
+    lifecycle: permanent
+    description: Official Council, moderation, and server-wide announcements.
+  questions_for_the_keepers:
+    name: questions-for-the-keepers
+    category: threshold
+    type: text
+    lifecycle: permanent
+    description: Public questions about rules, access, and server operations.
+  contact_the_council:
+    name: contact-the-council
+    category: threshold
+    type: text
+    lifecycle: permanent
+    description: Entry point for the private reporting and ticket service.
+
+  the_flickering_lamp:
+    name: the-flickering-lamp
+    category: commons
+    type: text
+    lifecycle: permanent
+    description: General conversation and introductions.
+  what_are_you_writing:
+    name: what-are-you-writing
+    category: commons
+    type: text
+    lifecycle: permanent
+    description: Check-ins, works in progress, goals, and milestones.
+  horror_reading_room:
+    name: horror-reading-room
+    category: commons
+    type: text
+    lifecycle: permanent
+    description: Books, stories, criticism, and spoiler-marked discussion.
+  screen_and_scream:
+    name: screen-and-scream
+    category: commons
+    type: text
+    lifecycle: permanent
+    description: Horror film, television, audio drama, and games discussion.
+  the_research_cabinet:
+    name: the-research-cabinet
+    category: commons
+    type: text
+    lifecycle: permanent
+    description: Historical, cultural, scientific, and folkloric research.
+  quiet_company:
+    name: quiet-company
+    category: commons
+    type: text
+    lifecycle: permanent
+    description: Low-pressure writing sprints, accountability, and co-working.
+
+  craft_after_dark:
+    name: craft-after-dark
+    category: workroom
+    type: text
+    lifecycle: permanent
+    description: Technique, structure, voice, pacing, and genre craft discussion.
+  brainstorming_seance:
+    name: brainstorming-seance
+    category: workroom
+    type: text
+    lifecycle: permanent
+    description: Human-to-human premise, plot, character, and worldbuilding help.
+  first_sightings:
+    name: first-sightings
+    category: workroom
+    type: forum
+    lifecycle: permanent
+    description: Voluntary excerpts and early-draft sharing.
+  critique_requests:
+    name: critique-requests
+    category: workroom
+    type: forum
+    lifecycle: permanent
+    description: Feedback requests with scope, content warnings, and boundaries.
+  critique_exchange:
+    name: critique-exchange
+    category: workroom
+    type: forum
+    lifecycle: permanent
+    description: Workshop discussion for accepted submissions and scoped cohorts.
+  revision_table:
+    name: revision-table
+    category: workroom
+    type: text
+    lifecycle: permanent
+    description: Revision questions, progress, and post-critique support.
+  the_unquiet_shelf:
+    name: the-unquiet-shelf
+    category: workroom
+    type: forum
+    lifecycle: permanent
+    description: Completed or published member work shared with stated permissions.
+
+  mature_horror_craft:
+    name: mature-horror-craft
+    category: red_room
+    type: text
+    lifecycle: permanent
+    description: Opt-in, age-restricted discussion of mature horror craft.
+  restricted_workshop:
+    name: restricted-workshop
+    category: red_room
+    type: forum
+    lifecycle: permanent
+    description: Opt-in, age-restricted workshop submissions and critique.
+  content_warning_desk:
+    name: content-warning-desk
+    category: red_room
+    type: text
+    lifecycle: permanent
+    description: Guidance on warnings, boundaries, and appropriate channel selection.
+
+  calls_from_the_dark:
+    name: calls-from-the-dark
+    category: notice_board
+    type: forum
+    lifecycle: permanent
+    description: Calls for submissions, anthologies, contests, and residencies.
+  market_watch:
+    name: market-watch
+    category: notice_board
+    type: text
+    lifecycle: permanent
+    description: Publishing news, market information, and submission resources.
+  member_publications:
+    name: member-publications
+    category: notice_board
+    type: forum
+    lifecycle: permanent
+    description: Clearly labeled member releases, readings, and crowdfunding.
+  services_and_collaborators:
+    name: services-and-collaborators
+    category: notice_board
+    type: forum
+    lifecycle: permanent
+    description: Clearly labeled paid services and collaboration offers.
+  events_in_the_lantern_room:
+    name: events-in-the-lantern-room
+    category: notice_board
+    type: forum
+    lifecycle: permanent
+    description: Workshops, readings, book clubs, writing sessions, and event details.
+
+  governance_hall:
+    name: governance-hall
+    category: council
+    type: forum
+    lifecycle: permanent
+    description: Proposed rules, constitutional amendments, and member comment.
+  council_record:
+    name: council-record
+    category: council
+    type: text
+    lifecycle: permanent
+    description: Public agendas, decisions, summaries, results, and financial records.
+  election_booth:
+    name: election-booth
+    category: council
+    type: forum
+    lifecycle: temporary
+    description: Read-only candidate statements and questions during election periods.
+  council_chamber:
+    name: council-chamber
+    category: council
+    type: text
+    lifecycle: permanent
+    description: Private Council deliberation and decision records.
+  moderator_watch:
+    name: moderator-watch
+    category: council
+    type: text
+    lifecycle: permanent
+    description: Private moderation coordination, records, and training resources.
+  archivists_workbench:
+    name: archivists-workbench
+    category: council
+    type: text
+    lifecycle: permanent
+    description: Private technical administration, security, backup, and recovery planning.
+
+  the_lantern_room:
+    name: The Lantern Room
+    category: voice
+    type: voice
+    lifecycle: optional
+    description: Casual conversation.
+  the_night_workshop:
+    name: The Night Workshop
+    category: voice
+    type: voice
+    lifecycle: optional
+    description: Writing sprints and co-working.
+  the_reading:
+    name: The Reading
+    category: voice
+    type: voice
+    lifecycle: optional
+    description: Readings, book clubs, and scheduled events.
+  council_meeting_room:
+    name: Council Meeting Room
+    category: voice
+    type: voice
+    lifecycle: optional
+    description: Private Council meetings.

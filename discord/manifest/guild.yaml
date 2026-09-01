@@ -1,0 +1,10 @@
+manifest_version: 1
+kind: guild
+
+community:
+  enabled: true
+  verification_level: medium
+  explicit_content_filter: all_members
+  rules_channel: community_standards
+  public_updates_channel: archivists_workbench
+  safety_alerts_channel: moderator_watch

@@ -1,0 +1,102 @@
+manifest_version: 1
+kind: forums
+
+forums:
+  first_sightings:
+    tags:
+      - Excerpt
+      - Opening
+      - Scene
+      - Flash
+      - No Critique
+      - Critique Welcome
+  critique_requests:
+    tags:
+      - Open
+      - Full
+      - Closed
+      - Short Story
+      - Novel
+      - Novella
+      - Poetry
+      - Script
+      - Early Draft
+      - Revision
+      - Structure
+      - Character
+      - Pacing
+      - Line Feedback
+  critique_exchange:
+    tags:
+      - Open
+      - In Progress
+      - Closed
+      - Short Story
+      - Novel
+      - Novella
+      - Poetry
+      - Script
+  the_unquiet_shelf:
+    tags:
+      - Short Story
+      - Novel
+      - Novella
+      - Poetry
+      - Script
+      - Published
+      - Complete
+  restricted_workshop:
+    tags:
+      - Open
+      - Full
+      - Closed
+      - Short Story
+      - Novel
+      - Novella
+      - Poetry
+      - Script
+      - Warnings Included
+  calls_from_the_dark:
+    tags:
+      - Open
+      - Closing Soon
+      - Closed
+      - Paying
+      - Non-paying
+      - Anthology
+      - Magazine
+      - Contest
+      - Residency
+  member_publications:
+    tags:
+      - Book
+      - Story
+      - Reading
+      - Crowdfunding
+      - Other
+  services_and_collaborators:
+    tags:
+      - Editing
+      - Design
+      - Narration
+      - Collaboration
+      - Other
+  events_in_the_lantern_room:
+    tags:
+      - Writing Sprint
+      - Reading
+      - Book Club
+      - Workshop
+      - Other
+  governance_hall:
+    tags:
+      - Proposal
+      - Discussion
+      - Ordinary Rule
+      - Constitutional Amend
+      - Resolved
+      - Withdrawn
+  election_booth:
+    tags:
+      - Candidate Statement
+      - Member Question

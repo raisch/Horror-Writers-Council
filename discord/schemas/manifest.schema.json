@@ -1,0 +1,802 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://horrorwriterscouncil.org/schemas/manifest.schema.json",
+    "title": "Horror Writers Council Discord Manifest",
+    "oneOf": [
+        {
+            "$ref": "#/$defs/rolesManifest"
+        },
+        {
+            "$ref": "#/$defs/categoriesManifest"
+        },
+        {
+            "$ref": "#/$defs/channelsManifest"
+        },
+        {
+            "$ref": "#/$defs/permissionsManifest"
+        },
+        {
+            "$ref": "#/$defs/forumsManifest"
+        },
+        {
+            "$ref": "#/$defs/guildManifest"
+        },
+        {
+            "$ref": "#/$defs/onboardingManifest"
+        },
+        {
+            "$ref": "#/$defs/automodManifest"
+        },
+        {
+            "$ref": "#/$defs/manualStepsManifest"
+        },
+        {
+            "$ref": "#/$defs/seedContentManifest"
+        }
+    ],
+    "$defs": {
+        "rolesManifest": {
+            "title": "Role Manifest",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "manifest_version",
+                "kind",
+                "role_order",
+                "roles"
+            ],
+            "properties": {
+                "manifest_version": {
+                    "const": 1
+                },
+                "kind": {
+                    "const": "roles"
+                },
+                "role_order": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                    }
+                },
+                "roles": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": {
+                        "$ref": "#/$defs/role"
+                    },
+                    "propertyNames": {
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                    }
+                }
+            }
+        },
+        "categoriesManifest": {
+            "title": "Category Manifest",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "manifest_version",
+                "kind",
+                "category_order",
+                "categories"
+            ],
+            "properties": {
+                "manifest_version": {
+                    "const": 1
+                },
+                "kind": {
+                    "const": "categories"
+                },
+                "category_order": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                    }
+                },
+                "categories": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": {
+                        "$ref": "#/$defs/category"
+                    },
+                    "propertyNames": {
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                    }
+                }
+            }
+        },
+        "category": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "name",
+                "description"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                },
+                "description": {
+                    "type": "string",
+                    "minLength": 1
+                }
+            }
+        },
+        "channelsManifest": {
+            "title": "Channel Manifest",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "manifest_version",
+                "kind",
+                "channels"
+            ],
+            "properties": {
+                "manifest_version": {
+                    "const": 1
+                },
+                "kind": {
+                    "const": "channels"
+                },
+                "channels": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": {
+                        "$ref": "#/$defs/channel"
+                    },
+                    "propertyNames": {
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                    }
+                }
+            }
+        },
+        "channel": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "name",
+                "category",
+                "type",
+                "lifecycle",
+                "description"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                },
+                "category": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*$"
+                },
+                "type": {
+                    "enum": [
+                        "text",
+                        "announcement",
+                        "forum",
+                        "voice"
+                    ]
+                },
+                "lifecycle": {
+                    "enum": [
+                        "permanent",
+                        "temporary",
+                        "optional"
+                    ]
+                },
+                "description": {
+                    "type": "string",
+                    "minLength": 1
+                }
+            }
+        },
+        "permissionsManifest": {
+            "title": "Permission Manifest",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "manifest_version",
+                "kind",
+                "permission_profiles",
+                "channel_profiles"
+            ],
+            "properties": {
+                "manifest_version": {
+                    "const": 1
+                },
+                "kind": {
+                    "const": "permissions"
+                },
+                "permission_profiles": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": {
+                        "$ref": "#/$defs/permissionProfile"
+                    },
+                    "propertyNames": {
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                    }
+                },
+                "channel_profiles": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                    },
+                    "propertyNames": {
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                    }
+                }
+            }
+        },
+        "permissionProfile": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "overwrites"
+            ],
+            "properties": {
+                "overwrites": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": {
+                        "$ref": "#/$defs/permissionOverwrite"
+                    },
+                    "propertyNames": {
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                    }
+                }
+            }
+        },
+        "permissionOverwrite": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": false,
+            "properties": {
+                "view_channel": {
+                    "$ref": "#/$defs/permissionValue"
+                },
+                "read_message_history": {
+                    "$ref": "#/$defs/permissionValue"
+                },
+                "send_messages": {
+                    "$ref": "#/$defs/permissionValue"
+                },
+                "manage_channels": {
+                    "$ref": "#/$defs/permissionValue"
+                },
+                "manage_messages": {
+                    "$ref": "#/$defs/permissionValue"
+                },
+                "connect": {
+                    "$ref": "#/$defs/permissionValue"
+                },
+                "speak": {
+                    "$ref": "#/$defs/permissionValue"
+                },
+                "move_members": {
+                    "$ref": "#/$defs/permissionValue"
+                }
+            }
+        },
+        "permissionValue": {
+            "enum": [
+                "allow",
+                "deny"
+            ]
+        },
+        "forumsManifest": {
+            "title": "Forum Manifest",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "manifest_version",
+                "kind",
+                "forums"
+            ],
+            "properties": {
+                "manifest_version": {
+                    "const": 1
+                },
+                "kind": {
+                    "const": "forums"
+                },
+                "forums": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": {
+                        "$ref": "#/$defs/forum"
+                    },
+                    "propertyNames": {
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                    }
+                }
+            }
+        },
+        "forum": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "tags"
+            ],
+            "properties": {
+                "tags": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 20,
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 20
+                    }
+                }
+            }
+        },
+        "guildManifest": {
+            "title": "Guild Manifest",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "manifest_version",
+                "kind",
+                "community"
+            ],
+            "properties": {
+                "manifest_version": {
+                    "const": 1
+                },
+                "kind": {
+                    "const": "guild"
+                },
+                "community": {
+                    "$ref": "#/$defs/communitySettings"
+                }
+            }
+        },
+        "communitySettings": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "enabled",
+                "verification_level",
+                "explicit_content_filter",
+                "rules_channel",
+                "public_updates_channel",
+                "safety_alerts_channel"
+            ],
+            "properties": {
+                "enabled": {
+                    "const": true
+                },
+                "verification_level": {
+                    "enum": [
+                        "none",
+                        "low",
+                        "medium",
+                        "high",
+                        "very_high"
+                    ]
+                },
+                "explicit_content_filter": {
+                    "enum": [
+                        "disabled",
+                        "members_without_roles",
+                        "all_members"
+                    ]
+                },
+                "rules_channel": {
+                    "$ref": "#/$defs/logicalKey"
+                },
+                "public_updates_channel": {
+                    "$ref": "#/$defs/logicalKey"
+                },
+                "safety_alerts_channel": {
+                    "$ref": "#/$defs/logicalKey"
+                }
+            }
+        },
+        "logicalKey": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "onboardingManifest": {
+            "title": "Onboarding Manifest",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "manifest_version",
+                "kind",
+                "enabled",
+                "default_channels",
+                "prompts"
+            ],
+            "properties": {
+                "manifest_version": {
+                    "const": 1
+                },
+                "kind": {
+                    "const": "onboarding"
+                },
+                "enabled": {
+                    "const": true
+                },
+                "default_channels": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                        "$ref": "#/$defs/logicalKey"
+                    }
+                },
+                "prompts": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                        "$ref": "#/$defs/onboardingPrompt"
+                    }
+                }
+            }
+        },
+        "onboardingPrompt": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "key",
+                "question",
+                "required",
+                "multiple",
+                "options"
+            ],
+            "properties": {
+                "key": {
+                    "$ref": "#/$defs/logicalKey"
+                },
+                "question": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 150
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "multiple": {
+                    "type": "boolean"
+                },
+                "options": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 25,
+                    "items": {
+                        "$ref": "#/$defs/onboardingOption"
+                    }
+                }
+            }
+        },
+        "onboardingOption": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "label",
+                "channels"
+            ],
+            "properties": {
+                "label": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                },
+                "channels": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "$ref": "#/$defs/logicalKey"
+                    }
+                }
+            }
+        },
+        "automodManifest": {
+            "title": "AutoMod Manifest",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "manifest_version",
+                "kind",
+                "rules"
+            ],
+            "properties": {
+                "manifest_version": {
+                    "const": 1
+                },
+                "kind": {
+                    "const": "automod"
+                },
+                "rules": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/$defs/automodRule"
+                    }
+                }
+            }
+        },
+        "automodRule": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "key",
+                "name",
+                "trigger",
+                "actions",
+                "alert_channel"
+            ],
+            "properties": {
+                "key": {
+                    "$ref": "#/$defs/logicalKey"
+                },
+                "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                },
+                "trigger": {
+                    "enum": [
+                        "keyword",
+                        "spam",
+                        "mention_spam"
+                    ]
+                },
+                "trigger_metadata": {
+                    "$ref": "#/$defs/automodTriggerMetadata"
+                },
+                "actions": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                        "enum": [
+                            "block_message",
+                            "send_alert"
+                        ]
+                    }
+                },
+                "alert_channel": {
+                    "$ref": "#/$defs/logicalKey"
+                }
+            },
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "trigger": {
+                                "const": "keyword"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": [
+                            "trigger_metadata"
+                        ],
+                        "properties": {
+                            "trigger_metadata": {
+                                "type": "object",
+                                "properties": {
+                                    "keyword_patterns": {}
+                                },
+                                "required": [
+                                    "keyword_patterns"
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "trigger": {
+                                "const": "mention_spam"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": [
+                            "trigger_metadata"
+                        ],
+                        "properties": {
+                            "trigger_metadata": {
+                                "type": "object",
+                                "properties": {
+                                    "mention_limit": {}
+                                },
+                                "required": [
+                                    "mention_limit"
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "automodTriggerMetadata": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "keyword_patterns": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 60,
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 260
+                    }
+                },
+                "mention_limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 50
+                }
+            }
+        },
+        "manualStepsManifest": {
+            "title": "Manual Steps Manifest",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "manifest_version",
+                "kind",
+                "manual_steps"
+            ],
+            "properties": {
+                "manifest_version": {
+                    "const": 1
+                },
+                "kind": {
+                    "const": "manual_steps"
+                },
+                "manual_steps": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/$defs/manualStep"
+                    }
+                }
+            }
+        },
+        "manualStep": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "key",
+                "required",
+                "title",
+                "location",
+                "instructions",
+                "verification"
+            ],
+            "properties": {
+                "key": {
+                    "$ref": "#/$defs/logicalKey"
+                },
+                "required": {
+                    "const": true
+                },
+                "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                },
+                "location": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                },
+                "instructions": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "verification": {
+                    "type": "string",
+                    "minLength": 1
+                }
+            }
+        },
+        "seedContentManifest": {
+            "title": "Seed Content Manifest",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "manifest_version",
+                "kind",
+                "seed_content"
+            ],
+            "properties": {
+                "manifest_version": {
+                    "const": 1
+                },
+                "kind": {
+                    "const": "seed_content"
+                },
+                "seed_content": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": {
+                        "$ref": "#/$defs/seedContentEntry"
+                    },
+                    "propertyNames": {
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                    }
+                }
+            }
+        },
+        "seedContentEntry": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "channel",
+                "source",
+                "pin"
+            ],
+            "properties": {
+                "channel": {
+                    "$ref": "#/$defs/logicalKey"
+                },
+                "source": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^(?!/)(?!.*\\.\\.)[A-Za-z0-9._/-]+\\.md$"
+                },
+                "pin": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "role": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "name",
+                "category",
+                "provisioning",
+                "description"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                },
+                "category": {
+                    "enum": [
+                        "infrastructure",
+                        "governance",
+                        "membership",
+                        "system"
+                    ]
+                },
+                "provisioning": {
+                    "enum": [
+                        "create",
+                        "system"
+                    ]
+                },
+                "description": {
+                    "type": "string",
+                    "minLength": 1
+                }
+            }
+        }
+    }
+}
