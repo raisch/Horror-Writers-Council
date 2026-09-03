@@ -17,3 +17,7 @@ Creative work and critique here must be human-to-human. Do not use generative AI
 Use `#critique-requests` to request feedback, `#first-sightings` for excerpts where critique is invited only on request, and `#critique-exchange` for accepted workshop submissions. Mature submissions belong only in `#restricted-workshop` when the relevant access and warning requirements are met.
 
 *Canonical source: `community-standards.md` and `member-guide.md`. Repository revision: managed at deployment.*
+
+---
+
+## THIS IS A TEST SERVER.

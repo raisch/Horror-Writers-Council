@@ -1,15 +1,11 @@
-Yes. I would build this as a small **Discord infrastructure-as-code project** whose first production deployment is also the first disaster-recovery test.
-
-The repository already defines the institutional requirements well enough to derive an initial configuration: it specifies the six major channel areas, 18+ membership, opt-in mature spaces, private reporting, scoped workshop cohorts, least-privilege Council/moderator/technical spaces, elections, and optional voice channels.  The Community Standards additionally establish the constraints the automation must preserve: consensual critique, author-controlled workshop use, restrictions on redistribution, private reporting, and the 18+ nature of the community.
-
-I would structure development as follows.
+**DEVELOPMENT PLAN**
 
 # 1. Define the target architecture
 
 Create a new technical project within the existing repository, or preferably alongside it if you want governance documents and operational code reviewed differently:
 
 ```text
-Horror-Writers-Council/
+Horror-Writers-Guild/
 ├── README.md
 ├── SERVER GOVERNANCE & CONSTITUTION.md
 ├── community-standards.md
@@ -1531,45 +1527,45 @@ That last pair is the real disaster-recovery acceptance test.
 In practical coding order, I would do:
 
 ```text
-01  Write roles.yaml
-02  Write categories.yaml
-03  Write channels.yaml
-04  Write permissions.yaml
-05  Write forums.yaml
-06  Write guild.yaml
-07  Write onboarding.yaml
-08  Write automod.yaml
-09  Write manual-steps.yaml
-10  Create JSON Schema
-11  Implement manifest validator
-12  Implement Discord state reader
-13  Implement state normalizer
-14  Implement diff/reconciliation engine
-15  Implement plan
-16  Implement role apply
-17  Implement category/channel apply
-18  Implement ordering
-19  Implement permissions
-20  Implement Community configuration
-21  Implement Forums
-22  Implement age restrictions
-23  Implement AutoMod
-24  Implement onboarding
-25  Implement seed messages
-26  Implement verification
-27  Implement state mapping
-28  Implement snapshots
-29  Implement drift detection
-30  Provision Test Server A
+01  Write roles.yaml [COMPLETED]
+02  Write categories.yaml [COMPLETED]
+03  Write channels.yaml [COMPLETED]
+04  Write permissions.yaml [COMPLETED]
+05  Write forums.yaml [COMPLETED]
+06  Write guild.yaml [COMPLETED]
+07  Write onboarding.yaml [COMPLETED]
+08  Write automod.yaml [COMPLETED]
+09  Write manual-steps.yaml [COMPLETED]
+10  Create JSON Schema [COMPLETED]
+11  Implement manifest validator [COMPLETED]
+12  Implement Discord state reader [COMPLETED]
+13  Implement state normalizer [COMPLETED]
+14  Implement diff/reconciliation engine [COMPLETED]
+15  Implement plan [COMPLETED]
+16  Implement role apply [COMPLETED]
+17  Implement category/channel apply [COMPLETED]
+18  Implement ordering [COMPLETED]
+19  Implement permissions [COMPLETED]
+20  Implement Community configuration [COMPLETED]
+21  Implement Forums [COMPLETED]
+22  Implement age restrictions [PARTIALLY COMPLETED]
+23  Implement AutoMod [COMPLETED]
+24  Implement onboarding [COMPLETED]
+25  Implement seed messages [COMPLETED]
+26  Implement verification [COMPLETED]
+27  Implement state mapping [COMPLETED]
+28  Implement snapshots [COMPLETED]
+29  Implement drift detection [COMPLETED]
+30  Provision Test Server A [COMPLETED]
 31  Destroy assumptions / deliberately alter A
 32  Verify drift detection
-33  Provision blank Test Server B
+33  Provision blank Test Server B [COMPLETED]
 34  Compare A and B
-35  Document manual-only settings
+35  Document manual-only settings [COMPLETED]
 36  Freeze manifest v1
 37  Bootstrap production with the same process
 38  Snapshot production
-39  Begin member onboarding
+39  Begin member onboarding [PARTIALLY COMPLETED]
 40  Build workshop/ticket systems separately
 ```
 

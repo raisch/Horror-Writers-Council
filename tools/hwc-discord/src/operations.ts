@@ -121,7 +121,9 @@ function onboardingSnowflake(mapping: ReturnType<typeof loadStateMapping>, key: 
     return id;
 }
 
-export function splitMessageContent(content: string, maximumLength = 2000): string[] {
+const explicitMessageBreak = /(?:\r?\n[ \t]*)*<!-- discord-message-break -->(?:[ \t]*\r?\n)*/g;
+
+function splitAutomatically(content: string, maximumLength: number): string[] {
     if (content.length <= maximumLength) return [content];
     const segments: string[] = [];
     let segment = "";
@@ -141,6 +143,13 @@ export function splitMessageContent(content: string, maximumLength = 2000): stri
     }
     if (segment) segments.push(segment);
     return segments;
+}
+
+export function splitMessageContent(content: string, maximumLength = 2000): string[] {
+    return content
+        .split(explicitMessageBreak)
+        .flatMap((section) => splitAutomatically(section, maximumLength))
+        .filter((section) => section.length > 0);
 }
 
 export function buildOnboardingPayload(desired: ReturnType<typeof loadDesiredState>, mapping: ReturnType<typeof loadStateMapping>): Record<string, unknown> {
@@ -243,6 +252,14 @@ export async function apply(guildOverride?: string): Promise<{ applied: number; 
 
     for (const channel of desired.channels.filter((channel) => channel.type === "announcement" || channel.type === "forum")) {
         await createChannel(channel);
+    }
+    for (const channel of desired.channels.filter((channel) => channel.position !== undefined)) {
+        const existing = actual.channels.find((item) => item.name === channel.name && item.type === channel.type);
+        if (existing && !hasChange("MoveChannel", `channels.${channel.key}`)) continue;
+        const channelId = mapping.resources[`channels.${channel.key}`];
+        if (!channelId) continue;
+        await writer.setChannelPosition(channelId, channel.position!, reason);
+        applied++;
     }
     for (const [channelKey, profileKey] of Object.entries(desired.channelProfiles)) {
         if (!hasChange("SetPermissionOverwrite", `permissions.${channelKey}`)) continue;

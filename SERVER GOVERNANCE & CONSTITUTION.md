@@ -1,6 +1,6 @@
 # SERVER GOVERNANCE & CONSTITUTION
 
-**Horror Writers Council**
+**Horror Writers Guild**
 
 **Version:** 1.0 Draft  
 **Status:** Proposed founding constitution  
@@ -8,7 +8,7 @@
 
 ## Preamble
 
-The Horror Writers Council is a Discord community for writers who read, discuss, draft, revise, and publish horror. The server exists to support rigorous creative work, candid but consensual critique, and a community in which members can take artistic risks without surrendering basic safety or dignity.
+The Horror Writers Guild is a Discord community for writers who read, discuss, draft, revise, and publish horror. The server exists to support rigorous creative work, candid but consensual critique, and a community in which members can take artistic risks without surrendering basic safety or dignity.
 
 The server is not governed by the personal preference of its technical owner. It is governed by this Constitution, the Community Standards adopted under it, and an elected Council of Elders. Discord's Terms of Service, applicable law, and immediate safety needs take precedence where they conflict with server policy.
 

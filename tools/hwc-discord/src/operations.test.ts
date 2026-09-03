@@ -37,4 +37,16 @@ describe("onboarding configuration", () => {
         expect(segments.every((segment) => segment.length <= 2000)).toBe(true);
         expect(segments.join("")).toBe(`${"A".repeat(1500)}\n\n${"B".repeat(1500)}`);
     });
+
+    it("uses an explicit Markdown delimiter for seed-message boundaries", () => {
+        const segments = splitMessageContent("First post\n\n<!-- discord-message-break -->\n\nSecond post");
+
+        expect(segments).toEqual(["First post", "Second post"]);
+    });
+
+    it("still enforces the message limit within explicitly separated sections", () => {
+        const segments = splitMessageContent(`${"A".repeat(2001)}<!-- discord-message-break -->Second post`);
+
+        expect(segments).toEqual(["A".repeat(2000), "A", "Second post"]);
+    });
 });

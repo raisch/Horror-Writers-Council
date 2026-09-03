@@ -8,7 +8,7 @@ const program = new Command();
 
 program
     .name("hwc")
-    .description("Manage Horror Writers Council Discord infrastructure.")
+    .description("Manage Horror Writers Guild Discord infrastructure.")
     .version("0.1.0");
 
 program

@@ -122,6 +122,7 @@ export function validateManifests(): ValidationResult {
     const categoryKeys = new Set(Object.keys(categories));
     const channelKeys = new Set(Object.keys(channels));
     const channelNamesByCategory = new Set<string>();
+    const channelPositionsByCategory = new Set<string>();
 
     for (const [channelKey, channel] of Object.entries(channels)) {
         const channelRecord = getNestedRecord(channels, channelKey);
@@ -136,6 +137,18 @@ export function validateManifests(): ValidationResult {
                 errors.push(`channels.${channelKey}: channel name is duplicated within ${category}: ${name}`);
             }
             channelNamesByCategory.add(nameKey);
+        }
+        const position = channelRecord.position;
+        if (position !== undefined) {
+            if (!Number.isInteger(position) || (position as number) < 0) {
+                errors.push(`channels.${channelKey}: position must be a non-negative integer`);
+            } else if (category !== undefined) {
+                const positionKey = `${category}\u0000${position}`;
+                if (channelPositionsByCategory.has(positionKey)) {
+                    errors.push(`channels.${channelKey}: position ${position} duplicates another channel in ${category}`);
+                }
+                channelPositionsByCategory.add(positionKey);
+            }
         }
         if (!asRecord(channel)) {
             errors.push(`channels.${channelKey}: channel must be an object`);

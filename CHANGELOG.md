@@ -2,9 +2,16 @@
 
 This log records substantive changes to the server's governance, standards, member guidance, and planning artifacts. Routine formatting corrections and non-substantive edits are not recorded.
 
+## 2026-09-03 - Seed-message boundaries added
+
+Added explicit author-controlled Discord post boundaries for managed seed content.
+
+- Seed documents can now use `<!-- discord-message-break -->` to start a new Discord post.
+- Each explicit section still observes Discord's 2,000-character message limit.
+
 ## 2026-08-31 - Initial artifacts created
 
-Created the initial planning and governance artifacts for the Horror Writers Council:
+Created the initial planning and governance artifacts for the Horror Writers Guild:
 
 - `README.md`
 - `SERVER GOVERNANCE & CONSTITUTION.md`

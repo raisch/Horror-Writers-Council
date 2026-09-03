@@ -2,7 +2,7 @@
 
 Hello prospective Councilors and members,
 
-Attached is the proposed founding Constitution for the Horror Writers Council. It establishes how this server will make decisions, choose and hold leaders accountable, protect member safety and creative work, manage conflicts of interest, and revise its rules as the community grows.
+Attached is the proposed founding Constitution for the Horror Writers Guild. It establishes how this server will make decisions, choose and hold leaders accountable, protect member safety and creative work, manage conflicts of interest, and revise its rules as the community grows.
 
 This is a request for review, not a request to endorse every future policy in advance. The Constitution sets the durable framework: member rights, Council authority and limits, elections, moderation and appeals, commercial disclosure, financial stewardship, amendment, and dissolution. It is intended to keep the server from depending on any one person's preferences or continued availability.
 

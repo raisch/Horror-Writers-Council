@@ -2,7 +2,7 @@
     "name": "hwc-discord",
     "version": "0.1.0",
     "private": true,
-    "description": "Discord infrastructure-as-code tooling for the Horror Writers Council.",
+    "description": "Discord infrastructure-as-code tooling for the Horror Writers Guild.",
     "type": "module",
     "engines": {
         "node": ">=22"

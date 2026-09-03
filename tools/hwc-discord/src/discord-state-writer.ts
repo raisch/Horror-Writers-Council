@@ -27,6 +27,10 @@ export class DiscordStateWriter {
         return this.rest.post(`/guilds/${this.guildId}/channels`, { body: { name, type, parent_id: parentId }, reason });
     }
 
+    setChannelPosition(channelId: string, position: number, reason: string): Promise<unknown> {
+        return this.rest.patch(`/guilds/${this.guildId}/channels`, { body: [{ id: channelId, position }], reason });
+    }
+
     updateGuild(body: Record<string, unknown>, reason: string): Promise<unknown> {
         return this.rest.patch(`/guilds/${this.guildId}`, { body, reason });
     }

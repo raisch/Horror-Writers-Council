@@ -1,6 +1,6 @@
-# Horror Writers Council
+# Horror Writers Guild
 
-The Horror Writers Council is a planned Discord community for people who write, read, revise, and seriously discuss horror.
+The Horror Writers Guild is a planned Discord community for people who write, read, revise, and seriously discuss horror.
 
 We are building a place for the full range of the genre: folk horror, gothic, weird fiction, psychological horror, body horror, cosmic dread, quiet unease, monsters, ghosts, and forms not yet named. The point is not simply to trade pages. It is to help each other make braver, stranger, more deliberate work.
 

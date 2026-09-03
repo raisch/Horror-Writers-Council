@@ -11,6 +11,7 @@ channels:
   start_here:
     name: start-here
     category: threshold
+    position: 0
     type: text
     lifecycle: permanent
     description: Joining steps, role selection, and wayfinding.

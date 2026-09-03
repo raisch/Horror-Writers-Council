@@ -31,3 +31,13 @@ node dist/main.js snapshot
 Complete the required Membership Screening step in Discord, then rerun `verify`. A second `plan` should report no remaining managed drift. `drift` reports unexpected changes without modifying the server.
 
 `archive-audit-log` exports administrative audit events only. It does not archive messages or other member content.
+
+## Seed Message Breaks
+
+To force a seed document to start a new Discord post, put this delimiter on its own line:
+
+```md
+<!-- discord-message-break -->
+```
+
+Each resulting post remains subject to Discord's 2,000-character message limit. The first post is the one pinned when the seed entry has `pin: true`.

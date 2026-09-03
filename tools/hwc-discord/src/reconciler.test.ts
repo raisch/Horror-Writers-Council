@@ -58,4 +58,33 @@ describe("createChangePlan", () => {
         const plan = createChangePlan(desired, actual, mapping);
         expect(plan.changes.filter((item) => item.operation === "SetPermissionOverwrite")).toEqual([]);
     });
+
+    it("plans a channel move when a declared channel position drifts", () => {
+        const desired = loadDesiredState();
+        const startHere = desired.channels.find((channel) => channel.key === "start_here");
+        expect(startHere?.position).toBe(0);
+
+        const actual: ActualState = {
+            ...emptyState,
+            channels: [{
+                discordId: "start-here",
+                name: "start-here",
+                categoryDiscordId: "threshold",
+                type: "text",
+                position: 3,
+                ageRestricted: false,
+                permissionOverwrites: {},
+                forumTags: []
+            }]
+        };
+        const mapping: StateMapping = { resources: { "channels.start_here": "start-here" } };
+        const plan = createChangePlan(desired, actual, mapping);
+
+        expect(plan.changes).toContainEqual(expect.objectContaining({
+            operation: "MoveChannel",
+            resource: "channels.start_here",
+            current: 3,
+            desired: 0
+        }));
+    });
 });

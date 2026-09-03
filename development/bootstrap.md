@@ -1,6 +1,6 @@
 # Test Discord Server Bootstrap
 
-This guide creates a disposable Discord server for exercising the Horror Writers Council infrastructure tool. It is not a production-launch procedure. Use a new empty server and do not invite community members.
+This guide creates a disposable Discord server for exercising the Horror Writers Guild infrastructure tool. It is not a production-launch procedure. Use a new empty server and do not invite community members.
 
 The canonical desired state is under `discord/manifest/`. Snapshots are evidence of Discord's actual state and are not authoritative.
 
@@ -257,3 +257,7 @@ git status --short
 ```
 
 Do not promote a test bot token, test guild ID, test state mapping, or test snapshot to production.
+
+# SERVER SETUP
+
+**ICON**: <a href="https://www.flaticon.com/free-icons/lovecraft" title="lovecraft icons">Lovecraft icons created by Magnific - Flaticon</a>

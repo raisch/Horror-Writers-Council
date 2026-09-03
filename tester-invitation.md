@@ -1,0 +1,1 @@
+Hi. I'm inviting you to a new Horror Writers Guild discord that I'm building. It's only a test at this point and so, not for publication. If you can recommend others to help test, please DM me and I'll invite them. Any feedback on the server you can offer would be greatly appreciated.

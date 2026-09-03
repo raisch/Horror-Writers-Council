@@ -9,3 +9,7 @@ Reports are handled confidentially as far as practical. A report involving a Mod
 The server is not an emergency service. For immediate danger, contact local emergency services or the relevant platform reporting channel.
 
 *Canonical source: `community-standards.md` and `member-guide.md`. Repository revision: managed at deployment.*
+
+---
+
+## THIS IS A TEST SERVER.

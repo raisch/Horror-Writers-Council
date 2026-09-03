@@ -62,6 +62,7 @@ export function loadDesiredState(): DesiredState {
                 key,
                 name: string(value.name),
                 category: string(value.category),
+                position: typeof value.position === "number" ? value.position : undefined,
                 type: string(value.type) as DesiredState["channels"][number]["type"],
                 lifecycle: string(value.lifecycle) as DesiredState["channels"][number]["lifecycle"]
             };

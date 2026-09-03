@@ -158,6 +158,9 @@ function planChannel(desired: DesiredState, actual: ActualState, mapping: StateM
     } else if (existing.type !== channel.type) {
         changes.push(change("UpdateChannel", `channels.${channel.key}`, "SENSITIVE", [], existing.type, channel.type));
     }
+    if (existing && channel.position !== undefined && existing.position !== channel.position) {
+        changes.push(change("MoveChannel", `channels.${channel.key}`, "SENSITIVE", ["CreateChannel"], existing.position, channel.position));
+    }
     const profile = desired.channelProfiles[channel.key];
     if (profile && (!existing || !permissionsMatch(desired, actual, mapping, channel.key, existing.discordId, profile))) {
         changes.push(change("SetPermissionOverwrite", `permissions.${channel.key}`, "SENSITIVE", ["CreateChannel"], undefined, profile));

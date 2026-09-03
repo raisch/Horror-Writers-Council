@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://horrorwriterscouncil.org/schemas/manifest.schema.json",
-    "title": "Horror Writers Council Discord Manifest",
+    "title": "Horror Writers Guild Discord Manifest",
     "oneOf": [
         {
             "$ref": "#/$defs/rolesManifest"
@@ -177,6 +177,10 @@
                 "category": {
                     "type": "string",
                     "pattern": "^[a-z][a-z0-9_]*$"
+                },
+                "position": {
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "type": {
                     "enum": [

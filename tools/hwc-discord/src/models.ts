@@ -20,6 +20,7 @@ export interface DesiredChannel {
     key: string;
     name: string;
     category: string;
+    position?: number;
     type: ChannelType;
     lifecycle: Lifecycle;
 }
