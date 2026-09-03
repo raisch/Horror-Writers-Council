@@ -41,3 +41,40 @@ To force a seed document to start a new Discord post, put this delimiter on its 
 ```
 
 Each resulting post remains subject to Discord's 2,000-character message limit. The first post is the one pinned when the seed entry has `pin: true`.
+
+## Constitution Discussion Posts
+
+After applying the infrastructure and building the tool, preview the Constitution discussion posts with:
+
+```text
+npm run constitution:discussion
+```
+
+Create the pending forum posts only after reviewing that plan:
+
+```text
+npm run constitution:discussion -- --yes
+```
+
+The script posts the title/index, every level-two heading, and each level-three Section from `SERVER GOVERNANCE & CONSTITUTION.md` to `#governance-hall`. It creates them in reverse source order because Discord displays Forum posts newest first, leaving the document title/index at the top. It records created thread IDs in the local state mapping, so a rerun creates only missing mapped posts.
+
+To delete and recreate the Constitution discussion posts after a source or ordering change, preview the replacement first, then run:
+
+```text
+npm run constitution:discussion -- --replace
+npm run constitution:discussion -- --replace --yes
+```
+
+Replacement deletes only the threads previously recorded under this script's `constitution_discussion.*` state-mapping keys. It does not delete unrelated posts in `#governance-hall`.
+
+Use `--debug` with either mode to log each Discord request, post key, segment count, thread ID, Discord REST retry/rate-limit events, and any API error details:
+
+```text
+npm run constitution:discussion -- --replace --yes --debug
+```
+
+The script waits two seconds between Discord writes by default to avoid Forum rate limits. Adjust the interval only if necessary:
+
+```text
+npm run constitution:discussion -- --replace --yes --delay 3000
+```
